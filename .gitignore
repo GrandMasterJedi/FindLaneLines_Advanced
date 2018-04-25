@@ -1,0 +1,9 @@
+__pycache__
+.ipynb_checkpoints
+data
+drivingData.h5
+model1.h5
+model2.h5
+model3.h5
+model4.h5
+tmp.py
