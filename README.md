@@ -8,7 +8,7 @@
 [image6]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
 
-# **Advanced Lane Finding Project**
+# **Advanced Lane Finding**
 
 
 
