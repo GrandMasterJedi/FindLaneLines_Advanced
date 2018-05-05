@@ -8,6 +8,10 @@
 [image6]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
 
+# TO DO. The following is a template
+
+
+
 # **Advanced Lane Finding**
 
 
