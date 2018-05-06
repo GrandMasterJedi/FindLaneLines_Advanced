@@ -473,3 +473,142 @@ def visualizeLaneOverlay(origImg, warpImg, leftFit, rightFit, mInv, lRad, rRad, 
     return result
 
 	
+def processImage0(imgPath, mtx, dist, fitPlot=True):
+    """
+    Pipeline for advanced lane detection. Import images using openCV
+    imgPath:    path of the image
+    mtx:        camera calibration for distortion
+    dist:       camera calibration for distortion
+    
+    """
+    img1 = cv2.imread(imgPath)
+    img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
+    
+    # Undistort
+    undistImg = cv2.undistort(img1, mtx, dist, None, mtx)
+
+    # Gradient filter
+    comboGr, absGr, magGr, dirGr, hlsGr = combinedThresh(undistImg)
+
+    # Perspective (warping)
+    m, mInv, warpImg, unwarpImg = perspectiveTransform(comboGr)
+    
+    # Polynomial fit
+    ret = lineFit(warpImg)
+    
+    if fitPlot == True:
+        # Visualize lane fit plot
+        fPlot = visualizeFit(warpImg, ret)
+
+    # Calculate curvature radius and distance from center
+    lRad, rRad, cDist = curveRadius_CenterDist(warpImg, ret)
+
+    fImg = visualizeLaneOverlay(undistImg, warpImg, ret['left_fit'], ret['right_fit'], mInv, lRad, rRad, cDist)
+    
+    return ret, img1, fImg
+	
+
+	
+# Define a class to receive the characteristics of each line detection
+class Line():
+    def __init__(self, n):
+        """
+        n is the window size of the moving average
+        """
+        self.n = n
+        
+        # was the line detected in the last iteration?
+        self.detected = False
+
+        # Polynomial coefficients: x = A*y^2 + B*y + C
+        # Each of A, B, C is a "list-queue" with max length n
+        self.A = []
+        self.B = []
+        self.C = []
+        # Average of above
+        self.A_avg = 0.
+        self.B_avg = 0.
+        self.C_avg = 0.
+
+    def getFit(self):
+        return (self.A_avg, self.B_avg, self.C_avg)
+
+    def addFit(self, fit_coeffs):
+        """
+        Gets most recent line fit coefficients and updates internal smoothed coefficients
+        fit_coeffs is a 3-element list of 2nd-order polynomial coefficients
+        """
+        # Coefficient queue full?
+        q_full = len(self.A) >= self.n
+
+        # Append line fit coefficients
+        self.A.append(fit_coeffs[0])
+        self.B.append(fit_coeffs[1])
+        self.C.append(fit_coeffs[2])
+
+        # Pop from index 0 if full
+        if q_full:
+            _ = self.A.pop(0)
+            _ = self.B.pop(0)
+            _ = self.C.pop(0)
+
+        # Simple average of line coefficients
+        self.A_avg = np.mean(self.A)
+        self.B_avg = np.mean(self.B)
+        self.C_avg = np.mean(self.C)
+
+        return (self.A_avg, self.B_avg, self.C_avg)
+
+
+		
+# MoviePy video annotation will call this function
+def processImage(img):
+    """
+    Apply pipeline for video images 
+    detected True: previously calculated leftLine and rightLine
+    """
+    global mtx, dist, leftLine, rightLine, detected
+#     global lRad, rRad, leftLaneInds, rightLaneInds
+      
+    # Undistort
+    undistImg = cv2.undistort(img, mtx, dist, None, mtx)
+
+    # Gradient filter
+    comboGr, absGr, magGr, dirGr, hlsGr = combinedThresh(undistImg)
+
+    # Perspective (warping)
+    m, mInv, warpImg, unwarpImg = perspectiveTransform(comboGr)
+    
+    if not detected:
+        # Polynomial fit
+        ret = lineFit(warpImg)
+        tLeftFit = ret['left_fit']
+        tRightFit = ret['right_fit']
+        # Get moving average of line fit coefficients
+        leftFit = leftLine.addFit(tLeftFit)
+        rightFit = rightLine.addFit(tRightFit)
+        
+        # Calculate curvature radius and distance from center
+        lRad, rRad, cDist = curveRadius_CenterDist(warpImg, ret)
+
+        detected = True      
+
+    else:  
+        # Line fitting already exist, continue fitting
+        leftFit = leftLine.getFit()
+        rightFit = rightLine.getFit()
+        ret = continueLineFit(warpImg, leftFit, rightFit)
+
+        # Only make updates if we detected lines in current frame
+        if ret is not None:
+            tLeftFit = ret['left_fit']
+            tRightFit = ret['right_fit']
+            leftFit = leftLine.addFit(tLeftFit)
+            rightFit = rightLine.addFit(tRightFit)
+            lRad, rRad, cDist = curveRadius_CenterDist(warpImg, ret)
+        else:
+            detected = False
+
+    fImg = visualizeLaneOverlay(undistImg, warpImg, leftFit, rightFit, mInv, lRad, rRad, cDist)
+    
+    return fImg

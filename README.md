@@ -1,20 +1,28 @@
 [//]: # (Image References)
 
-[image1]: ./examples/undistort_output.png "Undistorted"
-[image2]: ./test_images/test1.jpg "Road Transformed"
-[image3]: ./examples/binary_combo_example.jpg "Binary Example"
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image6]: ./examples/example_output.jpg "Output"
+
+
+[image1]: ./examples/ChessboardCornersCalibration.png "ChessCalibration"
+[image2]: ./examples/UndistortedChessboard.png "ChessUndistorted"
+[image3]: ./examples/UndistortedLane.png "UndistortedLane"
+[image4]: ./examples/ColorGradientFilter.png "ComboGrad"
+[image5]: ./examples/LanesLineFit2.png "LaneLineFit"
+[image6]: ./output_images/straight_line1.jpg "outImage1"
+[image7]: ./output_images/test1.jpg "outImage2"
 [video1]: ./project_video.mp4 "Video"
 
-# TO DO. The following is a template
+
+
+# TO DO. 
 
 
 
 # **Advanced Lane Finding**
 
+Assuming a camera is mounted on the car capturing images of the road lane ahead, I detect lane lines using advanced computer vision techniques 
+that include image distortion correction, perspective transformation and gradient filtering.
 
+The pipeline I provide is able to correctly identify lane lines for an _easy_ video clip, taken on relatively simple road conditions.
 
 
 
@@ -23,9 +31,11 @@
 * Python 3.x
 * NumPy
 * OpenCV
-* Random
-* Pandas
-* sklearn
+* Matplot.pyplot
+* MoviePy
+* glob
+* pickle
+* OS
 
 ---
 ## Goals / Steps
@@ -40,13 +50,8 @@
 
 
 
-
-## Udacity Project Rubric Points 
+## Rubric Points 
 ---
-
-### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
-
-You're reading it!
 
 ### Camera Calibration
 
