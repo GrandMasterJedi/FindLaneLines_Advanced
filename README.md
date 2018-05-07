@@ -1,10 +1,10 @@
 [//]: # (Image References)
-[image1]: ./examples/ChessboardCornersCalibration.png "ChessCalibration"
-[image2]: ./examples/UndistortedChessboard.png "ChessUndistorted"
-[image3]: ./examples/UndistortedLane.png "UndistortedLane"
-[image4]: ./examples/ColorGradientFilter.png "ComboGrad"
-[image5]: ./examples/WarpedLane.png "WarpLane"
-[image6]: ./examples/LanesLineFit2.png "LaneLineFit"
+[image1]: ./example/ChessboardCornersCalibration.png "ChessCalibration"
+[image2]: ./example/UndistortedChessboard.png "ChessUndistorted"
+[image3]: ./example/UndistortedLane.png "UndistortedLane"
+[image4]: ./example/ColorGradientFilter.png "ComboGrad"
+[image5]: ./example/WarpedLane.png "WarpLane"
+[image6]: ./example/LanesLineFit2.png "LaneLineFit"
 [image7]: ./output_images/straight_line1.jpg "outImage1"
 [image8]: ./output_images/test1.jpg "outImage2"
 [video1]: ./videoOutput1.mp4 "Video"
@@ -119,6 +119,7 @@ The radius of the curvature is converted from pixel image coordinates to meters 
 The folder (output_images)[./output_images/] contains identified lane with curvature and vehicle position estimation. The examples below shows correct identification of the lane and correct estimation of curvature radius and vehicle position.
 
 ![alt text][image7]
+
 ![alt text][image8]
 
 ---
@@ -127,15 +128,8 @@ The folder (output_images)[./output_images/] contains identified lane with curva
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Check out the video [here](./videoOutput1.mp4)
+Check out the video [here](./videoOutput1.mp4), or download and open with your computer video reader _videoOutput1.mp4_
 
----
-
-### Discussion
-
-#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
-
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
 
 
 ---
