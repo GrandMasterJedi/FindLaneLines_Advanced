@@ -109,7 +109,7 @@ The algorithms is relatively complex. It consists of finding midpoint of rectang
 
 #### 5. Describe how you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-The radius of the curvature and the position of the vehicle with respect to the lane center is calculated in definition *curveRadius_CenterDist(binImg, ret)* in cell 24 of _main.ipynb_. (Click (here)[https://www.intmath.com/applications-differentiation/8-radius-curvature.php] for an awesome tutorial on how to calculate the radius.)
+The radius of the curvature and the position of the vehicle with respect to the lane center is calculated in definition *curveRadius_CenterDist(binImg, ret)* in cell 24 of _main.ipynb_. (Click [here](https://www.intmath.com/applications-differentiation/8-radius-curvature.php) for an awesome tutorial on how to calculate the radius.)
 
 The radius of the curvature is converted from pixel image coordinates to meters of the real world assuming 30 meters for each 720 vertical pixels (ym_per_pix = 30/720). The position of the vehicle with respect to the identified lane is also calculated as the difference of the x-midpoint of the image with respect to the x-coordinate of the lane center and converted to meters assuming 3.7 meters (lane width) every 690 horizontal pixels of the image (xm_per_pix = 3.7/690)
 
