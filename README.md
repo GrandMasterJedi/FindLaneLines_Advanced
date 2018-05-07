@@ -5,7 +5,7 @@
 [image4]: ./example/ColorGradientFilter.png "ComboGrad"
 [image5]: ./example/WarpedLane.png "WarpLane"
 [image6]: ./example/LanesLineFit2.png "LaneLineFit"
-[image7]: ./output_images/straight_line1.jpg "outImage1"
+[image7]: ./output_images/straight_lines1.jpg "outImage1"
 [image8]: ./output_images/test1.jpg "outImage2"
 [video1]: ./videoOutput1.mp4 "Video"
 
