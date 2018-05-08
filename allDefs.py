@@ -377,8 +377,8 @@ def curveRadius_CenterDist(binImg, ret):
     """
     
     # Grab variables from ret dictionary
-#     leftFit = ret['left_fit']
-#     rightFit = ret['right_fit']
+    leftFit0 = ret['left_fit']
+    rightFit0 = ret['right_fit']
     nonzerox = ret['nonzerox']
     nonzeroy = ret['nonzeroy']
     leftLaneInds = ret['left_lane_inds']
@@ -421,8 +421,8 @@ def curveRadius_CenterDist(binImg, ret):
     # Distance from center is image x midpoint - mean of leftFit and rightFit intercepts 
     if rightFit is not None and leftFit is not None:
         tposition = binImg.shape[1]/2  # horizontal midpoint 
-        lFitx = leftFit[0]*h**2 + leftFit[1]*h + leftFit[2]
-        rFitx = rightFit[0]*h**2 + rightFit[1]*h + rightFit[2]
+        lFitx = leftFit0[0]*h**2 + leftFit0[1]*h + leftFit0[2]
+        rFitx = rightFit0[0]*h**2 + rightFit0[1]*h + rightFit0[2]
         laneCenter = (rFitx + lFitx) /2
         centerDist = (tposition - laneCenter) * xm_per_pix
              
@@ -567,8 +567,7 @@ def processImage(img):
     Apply pipeline for video images 
     detected True: previously calculated leftLine and rightLine
     """
-    global mtx, dist, leftLine, rightLine, detected
-#     global lRad, rRad, leftLaneInds, rightLaneInds
+    global mtx, dist, leftLine, rightLine, detected, lRad, rRad, cDist
       
     # Undistort
     undistImg = cv2.undistort(img, mtx, dist, None, mtx)
