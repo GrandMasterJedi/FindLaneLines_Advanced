@@ -138,10 +138,11 @@ The lane recognition pipeline succeded to detect road lanes in the video clip. H
 Overall, the presence of elements such as shadow, road sign placed within the lane, or road paved with different colors are detrimental to the success of the pipeline. To counter this shortcoming, one can play with different color transform, such as LUV transform, and different color and gradient thresholding. In my pipeline, I used _reasonable_ values, without trying many thresholding.
 
 For future work, a sanity check can improve the lane detection especially for challenging videos. 
-As one anonymous project reviewer suggested, the sanity check can be to answer the following points:
+As one anonymous project reviewer suggested, the sanity check can answer the following points:
 * Are the two polynomials an appropriate distance apart based on the known width of a highway lane?
 * Do the two polynomials have same or similar curvature?
 * Have these detections deviated significantly from those in recent frames?
+
 When the sanity check fails on one image frame, the lane detection result can be discarded and a proxy result, such as the previous lane detection result, can be taken.
 
 
