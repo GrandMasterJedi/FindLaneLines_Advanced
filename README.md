@@ -72,9 +72,8 @@ Below is an example of a distortion corrected image of the lane:
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  
 
-After the image undistortion, a combined filter on the image gradient and HLS color transform is applied. The combined filter is defined in *combinedThresh(img)*, contained in cell 12 of the _main.ipynb_. More specifically, the combined filter consist of an absolute Sobel threshold x-orientation filter (*absGr*), a gradient magnitude filter (*magGr*), a filter on the direction of the gradient (*dirGr*) and the filter on HLS color (*hlsGr).
+After the image undistortion, a combined filter on the image gradient and HLS color transform is applied. The combined filter is defined in *combinedThresh(img)*, contained in cell 12 of the _main.ipynb_. More specifically, the combined filter consist of an absolute Sobel threshold x-orientation filter (*absGr*), a gradient magnitude filter (*magGr*), a filter on the direction of the gradient (*dirGr*) and the filter on HLS color (*hlsGr*). The threshold parameter are set as below. Other parameter could be experimented to improve the lane detection pipelane.
 
-The threshold parameter are set as below. Other parameter could be experimented to improve the lane detection pipelane.
 ```python
     absGr = absSobelThresh(img, orient='x', thresh_min=50, thresh_max=255)
     magGr = magThresh(img, sobel_kernel=3, mag_thresh=(50, 255))
@@ -129,6 +128,22 @@ The folder (output_images)[./output_images/] contains identified lane with curva
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
 Check out the video [here](./videoOutput1.mp4), or download and open with your computer video reader _videoOutput1.mp4_
+
+## Discussion
+1. Briefly discuss any problems / issues you faced in your implementation of this project. Where will your pipeline likely fail? What could you do to make it more robust?
+
+
+The lane recognition pipeline succeded to detect road lanes in the video clip. However the conditions for the road and image colors were relatively simple. The same pipeline failed with videos with more challenging road and color conditions.
+
+Overall, the presence of elements such as shadow, road sign placed within the lane, or road paved with different colors are detrimental to the success of the pipeline. To counter this shortcoming, one can play with different color transform, such as LUV transform, and different color and gradient thresholding. In my pipeline, I used _reasonable_ values, without trying many thresholding.
+
+For future work, a sanity check can improve the lane detection especially for challenging videos. 
+As one anonymous project reviewer suggested, the sanity check can be to answer the following points:
+* Are the two polynomials an appropriate distance apart based on the known width of a highway lane?
+* Do the two polynomials have same or similar curvature?
+* Have these detections deviated significantly from those in recent frames?
+When the sanity check fails on one image frame, the lane detection result can be discarded and a proxy result, such as the previous lane detection result, can be taken.
+
 
 
 
